@@ -20,10 +20,8 @@ class cartcreate(APIView):
     permission_classes = (IsAuthenticated,)
     def post(self,request):
         ser = cartcreateserializer(data=request.data)
-        print('ser ',ser)
         if ser.is_valid():
             refinstanceset=productstable.objects.get(id=ser.data['cuserproducts'])
-            print('ref ins',refinstanceset)
             s=carttable(
              	cuser=request.user.email,
                 cuserproducts=refinstanceset,cqty=ser.data['cuserproducts'])
@@ -36,9 +34,7 @@ class viewcart(APIView):
     permission_classes = (IsAuthenticated,)
     def get(self,request):
         userget=carttable.objects.filter(cuser=request.user.email)
-        print('userget is',userget)
         sercartview=cartviewserializer(userget,many=True)
-        print('ser data',sercartview.data)
         totalproducts=sercartview.data
         initialcartamount=0
         for eachproduct in totalproducts:
@@ -47,15 +43,7 @@ class viewcart(APIView):
         return Response(totalproducts)
     def patch(self,request):
         userget=carttable.objects.get(cuser=request.user.email,cuserproducts=request.data['cuserproducts'])
-        print('userget is',userget)
         sercartview=cartcreateserializer(userget,data=request.data,partial=True)
         if sercartview.is_valid():
             sercartview.save()
-        print('ser data',sercartview.data)
         return Response(sercartview.data)
-'''
-goto storeproj\venv\Scripts and activate and run requirements file
-
-storeproj
-database using postgres sql to implement multitenancy and no sql as django less supports nosql DRF API for 1)login, logout with basic token authentication. 2)products list with sorting order by date and pagination having permissions of read only even if not authenticated. 3)adding products in cart with quantity and price showing price of each product total multiplied by price and total cart value.
-'''
