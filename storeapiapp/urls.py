@@ -6,5 +6,6 @@ urlpatterns=[
     path('plst',productlist.as_view()),
     path('carturl',cartcreate.as_view()),
     path('api-token-auth/', obtain_auth_token, name='api_token_auth'),
-    path('viewcart',viewcart.as_view())
+    path('viewcart',viewcart.as_view()),
+    path('whishlist',whishlist.as_view()),
 ]
