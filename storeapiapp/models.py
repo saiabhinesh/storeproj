@@ -11,3 +11,5 @@ class carttable(models.Model):
 	cuser=models.EmailField()
 	cuserproducts=models.ForeignKey(productstable,on_delete=models.CASCADE)
 	cqty=models.IntegerField()
+class wishlisttable(models.Model):
+	pass

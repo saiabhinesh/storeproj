@@ -47,3 +47,15 @@ class viewcart(APIView):
         if sercartview.is_valid():
             sercartview.save()
         return Response(sercartview.data)
+class whishlist:
+    permission_classes = (IsAuthenticated,)
+    def get(self,request):
+        userget=carttable.objects.filter(cuser=request.user.email)
+        sercartview=cartviewserializer(userget,many=True)
+        totalproducts=sercartview.data
+        initialcartamount=0
+        for eachproduct in totalproducts:
+            initialcartamount=initialcartamount+eachproduct['eachproducttotal']
+        totalproducts.append({'error':False,'cartvalue':initialcartamount})
+        return Response(totalproducts)
+
