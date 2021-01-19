@@ -47,7 +47,7 @@ class viewcart(APIView):
         if sercartview.is_valid():
             sercartview.save()
         return Response(sercartview.data)
-class whishlist:
+class whishlist(APIView):
     permission_classes = (IsAuthenticated,)
     def get(self,request):
         userget=carttable.objects.filter(cuser=request.user.email)

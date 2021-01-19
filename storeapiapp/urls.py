@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import productlist,cartcreate,viewcart
+from .views import productlist,cartcreate,viewcart,whishlist
 from rest_framework.authtoken.views import obtain_auth_token
 
 urlpatterns=[
