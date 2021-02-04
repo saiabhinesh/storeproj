@@ -4,11 +4,16 @@ class productlistserializer(serializers.ModelSerializer):
 	class Meta:
 		model=productstable
 		fields='__all__'
-#in serializers
+		lookup_field="pid"
+
+
 class cartcreateserializer(serializers.ModelSerializer):
+	cuserproducts = serializers.HyperlinkedIdentityField(
+		view_name='productstable-detail',lookup_field='pid')
 	class Meta:
 		model=carttable
 		exclude=['cuser']
+##must change look up field in cart create taking id i.e., pk must change to pid
 class cartviewserializer(serializers.ModelSerializer):
 	cuserproducts=productlistserializer()
 	eachproducttotal = serializers.SerializerMethodField(read_only=True)

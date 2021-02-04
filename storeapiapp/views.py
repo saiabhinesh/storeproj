@@ -21,14 +21,17 @@ class cartcreate(APIView):
     def post(self,request):
         ser = cartcreateserializer(data=request.data)
         if ser.is_valid():
-            refinstanceset=productstable.objects.get(id=ser.data['cuserproducts'])
+            print('print ser',ser.data)
+            refinstanceset=productstable.objects.get(pid=ser.data['cuserproducts'])
+            print('before save',request.user.email,refinstanceset,ser.data['cuserproducts'])
             s=carttable(
              	cuser=request.user.email,
-                cuserproducts=refinstanceset,cqty=ser.data['cuserproducts'])
+                cuserproducts=refinstanceset,cqty=ser.data['cqty'])
             s.save()
             return Response({'error':"false saved"})
         else:
             #ser.errors()
+            print('in error',ser.errors)
             return Response({'error':'True'})
 class viewcart(APIView):
     permission_classes = (IsAuthenticated,)
@@ -47,7 +50,7 @@ class viewcart(APIView):
         if sercartview.is_valid():
             sercartview.save()
         return Response(sercartview.data)
-class whishlist(APIView):
+class whishlist(APIView):#need to do by whishlist table
     permission_classes = (IsAuthenticated,)
     def get(self,request):
         userget=carttable.objects.filter(cuser=request.user.email)
