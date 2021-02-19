@@ -1,7 +1,7 @@
 from django.db import models
 
 class productstable(models.Model):
-	pid=models.IntegerField()
+	pid=models.IntegerField(unique=True)
 	pname=models.CharField(max_length=100)
 	pprice=models.IntegerField()
 	pdescription=models.TextField()

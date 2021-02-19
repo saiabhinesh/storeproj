@@ -4,7 +4,7 @@ class productlistserializer(serializers.ModelSerializer):
 	class Meta:
 		model=productstable
 		fields='__all__'
-		lookup_field="pid"
+		#lookup_field="pid"
 
 
 class cartcreateserializer(serializers.ModelSerializer):

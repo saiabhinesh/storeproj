@@ -19,15 +19,13 @@ class productlist(ListAPIView):
 class cartcreate(APIView):
     permission_classes = (IsAuthenticated,)
     def post(self,request):
-        ser = cartcreateserializer(data=request.data)
+        refinstanceset = productstable.objects.get(pid=request.data['cuserproducts'])
+        print(refinstanceset.id,'id is')
+        savedata={'cuser':request.user.email,'cuserproducts':refinstanceset.id,
+                  'cqty':request.data['cqty'],}
+        ser = cartcreateserializer(data=savedata)
         if ser.is_valid():
-            print('print ser',ser.data)
-            refinstanceset=productstable.objects.get(pid=ser.data['cuserproducts'])
-            print('before save',request.user.email,refinstanceset,ser.data['cuserproducts'])
-            s=carttable(
-             	cuser=request.user.email,
-                cuserproducts=refinstanceset,cqty=ser.data['cqty'])
-            s.save()
+            ser.save()
             return Response({'error':"false saved"})
         else:
             #ser.errors()
