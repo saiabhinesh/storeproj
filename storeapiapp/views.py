@@ -20,6 +20,7 @@ class cartcreate(APIView):
     permission_classes = (IsAuthenticated,)
     def post(self,request):
         refinstanceset = productstable.objects.get(pid=request.data['cuserproducts'])
+        #instead of getting id we can use to field in models to select our field as pk
         print(refinstanceset.id,'id is')
         savedata={'cuser':request.user.email,'cuserproducts':refinstanceset.id,
                   'cqty':request.data['cqty'],}
